@@ -17,6 +17,7 @@ package org.springframework.sbm.build.migration;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
+import org.openrewrite.maven.cache.InMemoryMavenPomCache;
 import org.openrewrite.maven.cache.MavenPomCache;
 import org.openrewrite.maven.cache.RocksdbMavenPomCache;
 import org.springframework.sbm.engine.annotations.StatefulComponent;
@@ -31,7 +32,7 @@ public class MavenPomCacheProvider {
 	private final MavenPomCache pomCache;
 
 	public MavenPomCacheProvider(Optional<MavenPomCache> mavenPomCacheProvider) {
-		this.pomCache = mavenPomCacheProvider.orElseGet(this::rocksdb);
+		this.pomCache = mavenPomCacheProvider.orElseGet(InMemoryMavenPomCache::new);
 	}
 
 	@NotNull

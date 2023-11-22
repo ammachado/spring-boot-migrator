@@ -20,5 +20,5 @@ public interface SbmConstants {
     /**
      * Line separator to use
      */
-    String LS = "\n";
+    String LS = System.lineSeparator();
 }

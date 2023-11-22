@@ -276,9 +276,9 @@ public class SpringBootUpgradeReportSection {
             String buttonCode = """
                     ++++
                     <div class="run-a-recipe" recipe="<RECIPE>">
-                    </div>          
+                    </div>
                     ++++
-                    """;
+                    """.replace("\n", LS);
             buttonCode = buttonCode.replace("<RECIPE>", recipe);
             sb.append(buttonCode);
         }

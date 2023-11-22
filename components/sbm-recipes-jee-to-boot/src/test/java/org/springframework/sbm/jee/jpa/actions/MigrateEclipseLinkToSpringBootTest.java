@@ -15,7 +15,6 @@
  */
 package org.springframework.sbm.jee.jpa.actions;
 
-import org.springframework.sbm.SbmConstants;
 import org.springframework.sbm.engine.context.ProjectContext;
 import org.springframework.sbm.java.util.BasePackageCalculator;
 import org.springframework.sbm.jee.jpa.resource.PersistenceXmlProjectResourceRegistrar;
@@ -35,12 +34,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MigrateEclipseLinkToSpringBootTest {
 
     private MigrateEclipseLinkToSpringBoot sut;
-    private Configuration configuration;
 
     @BeforeEach
     void setUp() throws IOException {
         Version version = new Version("2.3.0");
-        configuration = new Configuration(version);
+        Configuration configuration = new Configuration(version);
         configuration.setTemplateLoader(new FileTemplateLoader(new File("./src/main/resources/templates")));
 
         SbmApplicationProperties sbmApplicationProperties = new SbmApplicationProperties();
@@ -356,9 +354,8 @@ class MigrateEclipseLinkToSpringBootTest {
 
         sut.apply(projectContext);
 
-        assertThat(projectContext.getProjectJavaSources().findJavaSourceDeclaringType("com.vmware.example.EclipseLinkJpaConfiguration")).isNotEmpty();
-        String cleanedSource = projectContext.getProjectJavaSources().findJavaSourceDeclaringType("com.vmware.example.EclipseLinkJpaConfiguration").get().print().replace("\r\n", SbmConstants.LS).replace("\r", "\n");
-        assertThat(cleanedSource).isEqualTo(
+        assertThat(projectContext.getProjectJavaSources().findJavaSourceDeclaringType("com.vmware.example.EclipseLinkJpaConfiguration"))
+                .hasValueSatisfying(x -> assertThat(x.print()).isEqualToIgnoringNewLines(
                 """
                         package com.vmware.example;
                                                 
@@ -516,7 +513,7 @@ class MigrateEclipseLinkToSpringBootTest {
                                 return loadTimeWeaver;
                             }
                         }"""
-        );
+        ));
     }
 
 }

@@ -24,6 +24,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.sbm.SbmConstants;
 import org.springframework.sbm.engine.context.ProjectContext;
 import org.springframework.sbm.engine.recipe.Action;
 import org.springframework.sbm.engine.recipe.Condition;
@@ -187,10 +188,10 @@ public class SpringBootUpgradeReportAction implements Action {
         String buttonCode = """
                 ++++
                 <div class="run-all-recipe" >
-                                
+                
                 </div>
                 ++++
-                """;
+                """.replace("\n", SbmConstants.LS);
         return buttonCode.replace("<RECIPES>", renderedRecipeInputs);
 
     }
