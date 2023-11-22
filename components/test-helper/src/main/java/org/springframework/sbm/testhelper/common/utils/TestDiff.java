@@ -28,7 +28,7 @@ public class TestDiff {
         Patch<String> diff = DiffUtils.diff(originalLines, expected.lines().collect(Collectors.toList()));
         List<String> strings = DiffUtils.generateUnifiedDiff(actual, expected, originalLines, diff, 1000);
         String theDiff = strings.stream().collect(Collectors.joining(System.lineSeparator()));
-        String headline = "\n\nHere's the diff between 1. (---) actual and 2. (+++) expected:\n\n";
+        String headline = "%n%nHere's the diff between 1. (---) actual and 2. (+++) expected:%n%n".formatted();
         return headline + theDiff;
     }
 }

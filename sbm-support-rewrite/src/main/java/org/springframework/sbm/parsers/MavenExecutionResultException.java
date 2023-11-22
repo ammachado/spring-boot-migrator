@@ -21,6 +21,8 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.sbm.SbmConstants.LS;
+
 /**
  * Exception thrown if {@link MavenExecutor} had errors during execution.
  *
@@ -37,6 +39,6 @@ public class MavenExecutionResultException extends RuntimeException {
     }
 
     private static String buildMessage(String message, List<Throwable> exceptions) {
-        return message + "\n" + exceptions.stream().map(t -> ExceptionUtils.getStackTrace(t)).collect(Collectors.joining("\n"));
+        return message + LS + exceptions.stream().map(t -> ExceptionUtils.getStackTrace(t)).collect(Collectors.joining(LS));
     }
 }

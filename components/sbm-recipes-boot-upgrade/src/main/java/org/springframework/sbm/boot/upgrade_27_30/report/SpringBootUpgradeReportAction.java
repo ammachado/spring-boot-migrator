@@ -41,6 +41,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static org.springframework.sbm.SbmConstants.LS;
+
 /**
  * Special Action generates a Spring Boot Upgrade report.
  *
@@ -175,7 +177,7 @@ public class SpringBootUpgradeReportAction implements Action {
                 .range(0, recipes.size())
                 .mapToObj(idx -> "<input type=\"hidden\" name=\"recipeNames[]\" value=\"" + recipes.get(
                         idx) + "\">")
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining(LS));
 
 /*
 <form name="apply-all-recipes-form" action="http://localhost:8080/spring-boot-upgrade" method="post">
@@ -191,7 +193,7 @@ public class SpringBootUpgradeReportAction implements Action {
                 
                 </div>
                 ++++
-                """.replace("\n", SbmConstants.LS);
+                """.replace("\n", LS);
         return buttonCode.replace("<RECIPES>", renderedRecipeInputs);
 
     }

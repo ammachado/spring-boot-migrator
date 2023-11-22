@@ -33,6 +33,8 @@ import org.springframework.sbm.build.api.Plugin;
 import org.openrewrite.maven.tree.Dependency;
 import org.openrewrite.maven.tree.Scope;
 
+import static org.springframework.sbm.SbmConstants.LS;
+
 public class PomBuilder {
         private String coordinate;
         private List<String> modules;
@@ -107,28 +109,28 @@ public class PomBuilder {
 
         if (parent != null) {
             String[] coord = parent.split(":");
-            sb.append("    <parent>").append("\n");
-            sb.append("        <groupId>").append(coord[0]).append("</groupId>").append("\n");
-            sb.append("        <artifactId>").append(coord[1]).append("</artifactId>").append("\n");
-            sb.append("        <version>").append(coord[2]).append("</version>").append("\n");
-            sb.append("    </parent>").append("\n");
-            sb.append("    <artifactId>").append(artifactId).append("</artifactId>").append("\n");
+            sb.append("    <parent>").append(LS);
+            sb.append("        <groupId>").append(coord[0]).append("</groupId>").append(LS);
+            sb.append("        <artifactId>").append(coord[1]).append("</artifactId>").append(LS);
+            sb.append("        <version>").append(coord[2]).append("</version>").append(LS);
+            sb.append("    </parent>").append(LS);
+            sb.append("    <artifactId>").append(artifactId).append("</artifactId>").append(LS);
         } else if (parentPom != null) {
             String[] coord = parentPom.split(":");
-            sb.append("    <parent>").append("\n");
-            sb.append("        <groupId>").append(coord[0]).append("</groupId>").append("\n");
-            sb.append("        <artifactId>").append(coord[1]).append("</artifactId>").append("\n");
-            sb.append("        <version>").append(coord[2]).append("</version>").append("\n");
-            sb.append("    </parent>").append("\n");
+            sb.append("    <parent>").append(LS);
+            sb.append("        <groupId>").append(coord[0]).append("</groupId>").append(LS);
+            sb.append("        <artifactId>").append(coord[1]).append("</artifactId>").append(LS);
+            sb.append("        <version>").append(coord[2]).append("</version>").append(LS);
+            sb.append("    </parent>").append(LS);
         } if (parent == null){
             String[] coord = coordinate.split(":");
-            sb.append("    <groupId>").append(coord[0]).append("</groupId>").append("\n");
-            sb.append("    <artifactId>").append(coord[1]).append("</artifactId>").append("\n");
-            sb.append("    <version>").append(coord[2]).append("</version>").append("\n");
+            sb.append("    <groupId>").append(coord[0]).append("</groupId>").append(LS);
+            sb.append("    <artifactId>").append(coord[1]).append("</artifactId>").append(LS);
+            sb.append("    <version>").append(coord[2]).append("</version>").append(LS);
         }
 
 		if(packaging != null ){
-			sb.append("    <packaging>").append(packaging).append("</packaging>").append("\n");
+			sb.append("    <packaging>").append(packaging).append("</packaging>").append(LS);
 		}
 
 		if(!properties.isEmpty()){
@@ -136,9 +138,9 @@ public class PomBuilder {
 		}
 
         if (modules != null && !modules.isEmpty()) {
-            sb.append("    <modules>").append("\n");
-            modules.forEach(m -> sb.append("        <module>").append(m).append("</module>\n"));
-            sb.append("    </modules>").append("\n");
+            sb.append("    <modules>").append(LS);
+            modules.forEach(m -> sb.append("        <module>").append(m).append("</module>").append(LS));
+            sb.append("    </modules>").append(LS);
         }
 
         if (!dependencies.isEmpty()) {
@@ -150,27 +152,27 @@ public class PomBuilder {
 			sb.append(renderPlugins());
 		}
 
-        sb.append("</project>\n");
+        sb.append("</project>").append(LS);
         return sb.toString();
     }
 
 	String buildProperties(Map<String, String> properties) {
 		StringBuilder builder = new StringBuilder();
-		builder.append("    ").append("<properties>").append("\n");
+		builder.append("    ").append("<properties>").append(LS);
 		String props = properties.entrySet().stream().map(entry -> "    " + "    " + "<" + entry.getKey() + ">"
-				+ entry.getValue() + "</" + entry.getKey() + ">").collect(Collectors.joining("\n"));
-		builder.append(props).append("\n");
-		builder.append("    ").append("</properties>").append("\n");
+				+ entry.getValue() + "</" + entry.getKey() + ">").collect(Collectors.joining(LS));
+		builder.append(props).append(LS);
+		builder.append("    ").append("</properties>").append(LS);
 		return builder.toString();
 	}
 
     String renderDependencies(Map<Scope, org.openrewrite.maven.tree.Dependency> dependencies) {
         StringBuilder dependenciesSection = new StringBuilder();
-        dependenciesSection.append("    ").append("<dependencies>").append("\n");
+        dependenciesSection.append("    ").append("<dependencies>").append(LS);
         dependencies.entrySet().forEach(e -> {
             renderDependency(dependenciesSection, e.getKey(), e.getValue());
         });
-        dependenciesSection.append("    ").append("</dependencies>").append("\n");
+        dependenciesSection.append("    ").append("</dependencies>").append(LS);
         String dependenciesText = dependenciesSection.toString();
         return dependenciesText;
     }
@@ -181,7 +183,7 @@ public class PomBuilder {
                 .append("    ")
                 .append("    ")
                 .append("<dependency>")
-                .append("\n");
+                .append(LS);
         dependenciesSection
                     .append("    ")
                     .append("    ")
@@ -189,7 +191,7 @@ public class PomBuilder {
                     .append("<groupId>")
                     .append(dependency.getGroupId())
                     .append("</groupId>")
-                    .append("\n");
+                    .append(LS);
             dependenciesSection
                     .append("    ")
                     .append("    ")
@@ -197,7 +199,7 @@ public class PomBuilder {
                     .append("<artifactId>")
                     .append(dependency.getArtifactId())
                     .append("</artifactId>")
-                    .append("\n");
+                    .append(LS);
             if(dependency.getVersion() != null) {
                 dependenciesSection
                         .append("    ")
@@ -206,7 +208,7 @@ public class PomBuilder {
                         .append("<version>")
                         .append(dependency.getVersion())
                         .append("</version>")
-                        .append("\n");
+                        .append(LS);
             }
             if(scope != Scope.None) {
                 dependenciesSection
@@ -216,20 +218,20 @@ public class PomBuilder {
                         .append("<scope>")
                         .append(scope.name().toLowerCase())
                         .append("</scope>")
-                        .append("\n");
+                        .append(LS);
             }
         dependenciesSection
                 .append("    ")
                 .append("    ")
                 .append("</dependency>")
-                .append("\n");
+                .append(LS);
     }
 
 	private String renderPlugins(){
 		StringBuilder pluginSection = new StringBuilder();
 		if (!plugins.isEmpty()) {
-			pluginSection.append("    ").append("<build>").append("\n");
-			pluginSection.append("    ").append("    ").append("<plugins>").append("\n");
+			pluginSection.append("    ").append("<build>").append(LS);
+			pluginSection.append("    ").append("    ").append("<plugins>").append(LS);
 			try {
 				String plugin = MavenXmlMapper.writeMapper().writerWithDefaultPrettyPrinter().writeValueAsString(plugins.get(0));
 				pluginSection.append(plugin.replaceAll("  ", "    ").replaceAll("(?m)^", " ".repeat(12)));
@@ -237,8 +239,8 @@ public class PomBuilder {
 			catch (JsonProcessingException e) {
 				throw new RuntimeException(e);
 			}
-			pluginSection.append("    ").append("    ").append("</plugins>").append("\n");
-			pluginSection.append("    ").append("</build>").append("\n");
+			pluginSection.append("    ").append("    ").append("</plugins>").append(LS);
+			pluginSection.append("    ").append("</build>").append(LS);
 		}
 		return pluginSection.toString();
 	}

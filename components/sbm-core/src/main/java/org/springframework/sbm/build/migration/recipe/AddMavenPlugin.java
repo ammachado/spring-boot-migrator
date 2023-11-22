@@ -30,10 +30,13 @@ import org.openrewrite.xml.tree.Content;
 import org.openrewrite.xml.tree.Xml;
 import org.springframework.sbm.build.impl.OpenRewriteMavenPlugin;
 import org.springframework.sbm.build.impl.OpenRewriteMavenPlugin.OpenRewriteMavenPluginExecution;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.springframework.sbm.SbmConstants.LS;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -59,7 +62,7 @@ public class AddMavenPlugin extends Recipe {
 				List<Content> collect = root.getContent().stream().map(Content.class::cast).collect(Collectors.toList());
 				doAfterVisit(new AddToTagVisitor<>(root,
 						Xml.Tag.build(
-								"<build>\n" + "<plugins>\n" + createPluginTagString() + "</plugins>\n" + "</build>"),
+								"<build>" + LS + "<plugins>" + LS + createPluginTagString() + "</plugins>" + LS + "</build>"),
 						new MavenTagInsertionComparator(collect)));
 			}
 
@@ -102,27 +105,27 @@ public class AddMavenPlugin extends Recipe {
 
 	private String createPluginTagString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<plugin>\n");
+		sb.append("<plugin>").append(LS);
 		sb.append("<groupId>");
 		sb.append(plugin.getGroupId());
-		sb.append("</groupId>\n");
+		sb.append("</groupId>").append(LS);
 		sb.append("<artifactId>");
 		sb.append(plugin.getArtifactId());
-		sb.append("</artifactId>\n");
+		sb.append("</artifactId>").append(LS);
 		sb.append(renderVersion());
 		sb.append(renderExecutions());
 		sb.append(renderConfiguration());
-		sb.append(plugin.getDependencies() != null ? plugin.getDependencies().trim() + "\n" : "");
-		sb.append("</plugin>\n");
+		sb.append(plugin.getDependencies() != null ? plugin.getDependencies().trim() + LS : "");
+		sb.append("</plugin>").append(LS);
 		return sb.toString();
 	}
 
 	private String renderGoal(String goal) {
-		return "<goal>" + goal + "</goal>";
+		return "<goal>%s</goal>".formatted(goal);
 	}
 
 	private String renderVersion() {
-		return plugin.getVersion() != null ? "<version>" + plugin.getVersion() + "</version>\n" : "";
+		return StringUtils.hasLength(plugin.getVersion()) ? "<version>%s</version>%n".formatted(plugin.getVersion()) : "";
 	}
 
 	private String renderConfiguration(){
@@ -140,15 +143,16 @@ public class AddMavenPlugin extends Recipe {
 	}
 
 	private String renderExecutions() {
-		if (plugin.getExecutions() == null || plugin.getExecutions().isEmpty())
+		if (plugin.getExecutions() == null || plugin.getExecutions().isEmpty()) {
 			return "";
+		}
 		String executions = AddMavenPlugin.this.plugin.getExecutions().stream().map(this::renderExecution)
-				.collect(Collectors.joining("\n"));
-		return "<executions>\n" + executions + "\n</executions>\n";
+				.collect(Collectors.joining(LS));
+		return "<executions>%n%s%n</executions>%n".formatted(executions);
 	}
 
 	private String renderExecution(OpenRewriteMavenPluginExecution execution) {
-		return "<execution>\n" + renderId(execution) + renderGoals(execution) + renderPhase(execution)
+		return "<execution>" + LS + renderId(execution) + renderGoals(execution) + renderPhase(execution)
 				+ renderExecutionConfiguration(execution) + "</execution>";
 	}
 
@@ -157,18 +161,19 @@ public class AddMavenPlugin extends Recipe {
 	}
 
 	private String renderId(OpenRewriteMavenPluginExecution execution) {
-		return execution.getId() != null && !execution.getId().isBlank() ? "<id>" + execution.getId() + "</id>\n" : "";
+		return StringUtils.hasLength(execution.getId()) ? "<id>%s</id>%n".formatted(execution.getId()) : "";
 	}
 
 	private String renderGoals(OpenRewriteMavenPluginExecution execution) {
-		if (execution.getGoals() == null || execution.getGoals().isEmpty())
+		if (execution.getGoals() == null || execution.getGoals().isEmpty()) {
 			return "";
-		String goals = execution.getGoals().stream().map(this::renderGoal).collect(Collectors.joining("\n"));
-		return "<goals>\n" + goals + "\n</goals>\n";
+		}
+		String goals = execution.getGoals().stream().map(this::renderGoal).collect(Collectors.joining(LS));
+		return "<goals>%n%s%n</goals>".formatted(goals);
 	}
 
 	private String renderPhase(OpenRewriteMavenPluginExecution execution) {
-		return execution.getPhase() == null ? "" : "<phase>" + execution.getPhase() + "</phase>";
+		return execution.getPhase() == null ? "" : "<phase>%s</phase>".formatted(execution.getPhase());
 	}
 
 	@Override

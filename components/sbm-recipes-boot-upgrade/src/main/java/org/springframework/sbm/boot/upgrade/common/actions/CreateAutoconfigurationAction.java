@@ -20,6 +20,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.openrewrite.ExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.sbm.SbmConstants;
 import org.springframework.sbm.build.api.Module;
 import org.springframework.sbm.common.filter.PathPatternMatchingProjectResourceFinder;
 import org.springframework.sbm.engine.context.ProjectContext;
@@ -41,7 +42,7 @@ public class CreateAutoconfigurationAction extends AbstractAction {
     private static final String SPRING_FACTORIES_PATH = "/**/src/main/resources/META-INF/spring.factories";
     private static final String AUTO_CONFIGURATION_IMPORTS = "src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports";
     public static final String ENABLE_AUTO_CONFIGURATION_KEY = "org.springframework.boot.autoconfigure.EnableAutoConfiguration";
-    public static final Pattern COMMENT_REGEX = Pattern.compile("^#.*(\r|\n)+");
+    public static final Pattern COMMENT_REGEX = Pattern.compile("^#.*(\r?\n)+");
     @JsonIgnore
     @Autowired
     private ExecutionContext executionContext;
@@ -61,7 +62,7 @@ public class CreateAutoconfigurationAction extends AbstractAction {
 
             String autoConfigString = springAutoConfigProperties
                     .get()
-                    .replaceAll(",", "\\\n");
+                    .replaceAll(",", SbmConstants.LS);
 
 
             ProjectResource springFactoriesResource = props.get().getRight();

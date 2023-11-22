@@ -18,11 +18,15 @@ package org.springframework.sbm.build.api;
 import io.micrometer.core.lang.Nullable;
 import lombok.*;
 import org.openrewrite.semver.LatestRelease;
+import org.springframework.sbm.SbmConstants;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.sbm.SbmConstants.LS;
 
 @Getter
 @Setter
@@ -57,9 +61,9 @@ public class Dependency {
 
     @Override
     public String toString() {
-        return "<dependency>\n" +
-                "   <groupId>" + groupId + "</groupId>\n" +
-                "   <artifactId>" + artifactId + "</artifactId>\n" +
+        return "<dependency>" + LS +
+                "   <groupId>" + groupId + "</groupId>" + LS +
+                "   <artifactId>" + artifactId + "</artifactId>" + LS +
                 tagString("version", version) +
                 tagString("type", type) +
                 tagString("scope", scope) +
@@ -74,26 +78,24 @@ public class Dependency {
 
     private Comparator<Dependency> comparator(){
         LatestRelease latestRelease = new LatestRelease(null);
-        return Comparator.comparing(Dependency::getVersion, latestRelease::compare);
+        return Comparator.comparing(Dependency::getVersion, latestRelease);
     }
 
     private String exclusionString() {
         if (exclusions.isEmpty()) {
             return "";
         } else {
-            StringBuilder b = new StringBuilder("   <exclusions>\n");
-            for (Dependency e : exclusions) {
-                b.append("      " + e + "\n");
-            }
-            b.append("   </exclusions>\n");
-            return b.toString();
+            String b = "   <exclusions>%n".formatted() +
+                    exclusions.stream().map(Dependency::toString).collect(Collectors.joining(SbmConstants.LS)) +
+                    "   </exclusions>%n".formatted();
+            return b;
         }
     }
 
-    private String tagString(String name, String value) {
+    private static String tagString(String name, String value) {
         return value == null
                 ? ""
-                : "   <" + name + ">" + value + "</" + name + ">\n";
+                : "   <%1$s>%2$s</%1$s>%n".formatted(name, value);
     }
 
     /**

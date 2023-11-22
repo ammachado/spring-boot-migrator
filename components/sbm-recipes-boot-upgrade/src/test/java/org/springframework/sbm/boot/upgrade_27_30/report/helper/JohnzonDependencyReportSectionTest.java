@@ -36,7 +36,7 @@ public class JohnzonDependencyReportSectionTest {
     }
 
     @Test
-    public void rendersBannerSupportInformation() {
+    public void rendersJohnzonSupportInformation() {
         ProjectContext context = TestProjectContext.buildProjectContext()
                 .withBuildFileHavingDependencies("org.apache.johnzon:johnzon-core:1.2.11")
                 .build();

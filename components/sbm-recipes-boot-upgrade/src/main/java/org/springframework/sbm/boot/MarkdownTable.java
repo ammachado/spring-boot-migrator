@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.sbm.SbmConstants.LS;
+
 public class MarkdownTable {
 
     private static TableDefinition tableDefinition;
@@ -72,24 +74,24 @@ public class MarkdownTable {
 
         public String render() {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("\n");
+            stringBuilder.append(LS);
             // start table
-            stringBuilder.append("|===").append("\n");
+            stringBuilder.append("|===").append(LS);
             // render header row
             tableDefinition.columnDefinition.columns.forEach(columnHeader -> {
                 stringBuilder.append("| ").append(columnHeader.text);
             });
-            stringBuilder.append("\n\n");
+            stringBuilder.append(LS).append(LS);
             // render table formatting row
             // render table rows
-            tableDefinition.rowDefinitions.stream().forEach(rowDef -> {
+            tableDefinition.rowDefinitions.forEach(rowDef -> {
                 rowDef.colTexts.forEach(col -> {
                     stringBuilder.append(" |").append(col.text);
                 });
-                stringBuilder.append("\n");
+                stringBuilder.append(LS);
             });
             // end table
-            stringBuilder.append("|===").append("\n");
+            stringBuilder.append("|===").append(LS);
             return stringBuilder.toString();
         }
     }

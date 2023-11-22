@@ -20,6 +20,8 @@ import org.springframework.sbm.java.api.Expression;
 
 import java.util.Map;
 
+import static org.springframework.sbm.SbmConstants.LS;
+
 public class SingletonAnnotationTemplateMapper {
     private static final String DESCRIPTION_ATTRIBUTE = "description";
     private static final String NAME_ATTRIBUTE = "name";
@@ -35,10 +37,10 @@ public class SingletonAnnotationTemplateMapper {
 
         Map<String, Expression> attributes = annotation.getAttributes();
         if (attributes.containsKey(DESCRIPTION_ATTRIBUTE)) {
-            serviceAnnotationBuilder.append("/**").append("\n");
+            serviceAnnotationBuilder.append("/**").append(LS);
             String descriptionValue = attributes.get(DESCRIPTION_ATTRIBUTE).getAssignmentRightSide().printVariable();
-            serviceAnnotationBuilder.append("* ").append(descriptionValue).append("\n");
-            serviceAnnotationBuilder.append("*/").append("\n");
+            serviceAnnotationBuilder.append("* ").append(descriptionValue).append(LS);
+            serviceAnnotationBuilder.append("*/").append(LS);
         }
 
         serviceAnnotationBuilder.append("@Service");

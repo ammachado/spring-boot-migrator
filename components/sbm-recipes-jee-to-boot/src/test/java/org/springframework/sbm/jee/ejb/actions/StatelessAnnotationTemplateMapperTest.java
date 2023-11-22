@@ -39,9 +39,10 @@ class StatelessAnnotationTemplateMapperTest {
 
         JavaSource openRewriteJavaSource = TestProjectContext.buildProjectContext()
                 .withJavaSources(
-                        "import javax.ejb.Stateless;\n" +
-                                "@Stateless(mappedName=\"theMappedName\")\n" +
-                                "public class TheBean {}")
+                        """
+                                import javax.ejb.Stateless;
+                                @Stateless(mappedName="theMappedName")
+                                public class TheBean {}""")
                 .withBuildFileHavingDependencies("javax.ejb:javax.ejb-api:3.2")
                 .build()
                 .getProjectJavaSources()
@@ -51,7 +52,7 @@ class StatelessAnnotationTemplateMapperTest {
         Annotation statelessAnnotation = openRewriteJavaSource.getTypes().get(0).getAnnotations().get(0);
         String annotationToTemplate = sut.mapToServiceAnnotation(statelessAnnotation);
 
-        assertThat(annotationToTemplate).isEqualTo(
+        assertThat(annotationToTemplate).isEqualToIgnoringNewLines(
                 "@Service"
         );
     }
@@ -83,9 +84,10 @@ class StatelessAnnotationTemplateMapperTest {
 
         JavaSource openRewriteJavaSource = TestProjectContext.buildProjectContext()
                 .withJavaSources(
-                        "import javax.ejb.Stateless;\n" +
-                                "@Stateless(description=\"a description\")\n" +
-                                "public class TheBean {}")
+                        """
+                                import javax.ejb.Stateless;
+                                @Stateless(description="a description")
+                                public class TheBean {}""")
                 .withBuildFileHavingDependencies("javax.ejb:javax.ejb-api:3.2")
                 .build()
                 .getProjectJavaSources()
@@ -95,11 +97,12 @@ class StatelessAnnotationTemplateMapperTest {
         Annotation statelessAnnotation = openRewriteJavaSource.getTypes().get(0).getAnnotations().get(0);
         String annotationToTemplate = sut.mapToServiceAnnotation(statelessAnnotation);
 
-        assertThat(annotationToTemplate).isEqualTo(
-                "/**\n" +
-                        "* a description\n" +
-                        "*/\n" +
-                        "@Service"
+        assertThat(annotationToTemplate).isEqualToIgnoringNewLines(
+                """
+                        /**
+                        * a description
+                        */
+                        @Service"""
         );
     }
 
@@ -109,9 +112,10 @@ class StatelessAnnotationTemplateMapperTest {
 
         JavaSource openRewriteJavaSource = TestProjectContext.buildProjectContext()
                 .withJavaSources(
-                        "import javax.ejb.Stateless;\n" +
-                                "@Stateless(description=\"a description\", mappedName=\"theMappedName\", name=\"beanName\")\n" +
-                                "public class TheBean {}")
+                        """
+                                import javax.ejb.Stateless;
+                                @Stateless(description="a description", mappedName="theMappedName", name="beanName")
+                                public class TheBean {}""")
                 .withBuildFileHavingDependencies("javax.ejb:javax.ejb-api:3.2")
                 .build()
                 .getProjectJavaSources()
@@ -121,11 +125,12 @@ class StatelessAnnotationTemplateMapperTest {
         Annotation statelessAnnotation = openRewriteJavaSource.getTypes().get(0).getAnnotations().get(0);
         String annotationToTemplate = sut.mapToServiceAnnotation(statelessAnnotation);
 
-        assertThat(annotationToTemplate).isEqualTo(
-                "/**\n" +
-                        "* a description\n" +
-                        "*/\n" +
-                        "@Service(\"beanName\")"
+        assertThat(annotationToTemplate).isEqualToIgnoringNewLines(
+                """
+                        /**
+                        * a description
+                        */
+                        @Service("beanName")"""
         );
     }
 

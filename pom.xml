@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework.sbm</groupId>
@@ -21,7 +22,7 @@
         <openrewrite.spring.version>4.32.0</openrewrite.spring.version>
         <rewrite-migrate-java.version>1.17.0</rewrite-migrate-java.version>
         <spring-boot.version>2.7.5</spring-boot.version>
-        <progressbar.version>0.9.5</progressbar.version>
+        <progressbar.version>0.10.0</progressbar.version>
         <testcontainers.version>1.19.1</testcontainers.version>
         <maven-invoker.version>3.2.0</maven-invoker.version>
         <shrinkwrap.resolvers.version>3.1.4</shrinkwrap.resolvers.version>
@@ -31,10 +32,12 @@
         <generated-sources.dir>src/generated/java</generated-sources.dir>
         <snakeyaml.version>1.33</snakeyaml.version>
         <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
+
     </properties>
 
     <scm>
-        <developerConnection>scm:git:https://github.com/spring-projects-experimental/spring-boot-migrator.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/spring-projects-experimental/spring-boot-migrator.git
+        </developerConnection>
         <connection>scm:git:https://github.com/spring-projects-experimental/spring-boot-migrator</connection>
         <url>https://github.com/spring-projects-experimental/spring-boot-migrator</url>
         <tag>0.15.0</tag>
@@ -338,10 +341,11 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>3.0.1</version>
                 <configuration>
-                    <connectionUrl>scm:git:https://github.com/spring-projects-experimental/spring-boot-migrator.git</connectionUrl>
+                    <connectionUrl>scm:git:https://github.com/spring-projects-experimental/spring-boot-migrator.git
+                    </connectionUrl>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <tagNameFormat>@{project.version}</tagNameFormat>
-<!--                    <releaseProfiles>release</releaseProfiles>-->
+                    <!--                    <releaseProfilesurefissu>release</releaseProfiles>-->
                 </configuration>
             </plugin>
 
@@ -488,4 +492,66 @@ limitations under the License.
             </plugin-->
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <property>
+                    <name>windowsLineSeparators</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.2.2</version>
+                        <configuration>
+                            <systemProperties>
+                                <property>
+                                    <name>buildDir</name>
+                                    <value>${project.build.outputDirectory}</value>
+                                </property>
+                                <property>
+                                    <name>line.separator</name>
+                                    <value>\r\n</value>
+                                </property>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>3.1.2</version>
+                        <configuration>
+                            <groups>integration</groups>
+                            <includes>
+                                <include>**/*Test.java</include>
+                            </includes>
+                            <trimStackTrace>false</trimStackTrace>
+                            <systemProperties>
+                                <property>
+                                    <name>buildDir</name>
+                                    <value>${project.build.outputDirectory}</value>
+                                </property>
+                                <property>
+                                    <name>line.separator</name>
+                                    <value>\r\n</value>
+                                </property>
+                            </systemProperties>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

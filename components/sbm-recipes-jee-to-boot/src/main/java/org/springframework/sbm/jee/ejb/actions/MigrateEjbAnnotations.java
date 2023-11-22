@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.sbm.SbmConstants.LS;
+
 /**
  * Migrates {@code @EJB} annotations to {@code @Autowired}.
  */
@@ -127,7 +129,7 @@ public class MigrateEjbAnnotations extends AbstractAction {
         }
         if (!commentLines.isEmpty()) {
             autowiredSb.append("/*\n");
-            commentLines.forEach(c -> autowiredSb.append(" * ").append(c).append("\n"));
+            commentLines.forEach(c -> autowiredSb.append(" * ").append(c).append(LS));
             autowiredSb.append(" */\n");
             return Optional.of(autowiredSb.toString());
         }

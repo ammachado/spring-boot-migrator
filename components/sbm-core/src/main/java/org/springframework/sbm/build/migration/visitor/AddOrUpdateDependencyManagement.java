@@ -29,6 +29,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
+import static org.springframework.sbm.SbmConstants.LS;
+
 public class AddOrUpdateDependencyManagement extends MavenVisitor<ExecutionContext> {
 
     /*
@@ -164,7 +166,7 @@ public class AddOrUpdateDependencyManagement extends MavenVisitor<ExecutionConte
                 .orElse(null);
 
         if (child == null) {
-            child = Xml.Tag.build("<" + childTagName + ">\n</" + childTagName + ">\n");
+            child = Xml.Tag.build("<" + childTagName + ">" + LS + "</" + childTagName + ">" + LS);
             tag = addChild(tag, child);
         }
         doAfterVisit(new AddOrUpdateDependencyManagement(child, dep, Arrays.copyOfRange(expectedTagNames, 1, expectedTagNames.length)));

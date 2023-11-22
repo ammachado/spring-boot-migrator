@@ -20,6 +20,8 @@ import org.springframework.sbm.java.api.Expression;
 
 import java.util.Map;
 
+import static org.springframework.sbm.SbmConstants.LS;
+
 /**
  * Helps with the migration of {@code @Stateless} annotation to {@code @Service} annotation.
  */
@@ -39,10 +41,10 @@ public class StatelessAnnotationTemplateMapper {
 
         Map<String, Expression> attributes = annotation.getAttributes();
         if (attributes.containsKey(DESCRIPTION_ATTRIBUTE)) {
-            serviceAnnotationBuilder.append("/**").append("\n");
+            serviceAnnotationBuilder.append("/**").append(LS);
             String descriptionValue = attributes.get(DESCRIPTION_ATTRIBUTE).getAssignmentRightSide().printVariable();
-            serviceAnnotationBuilder.append("* ").append(descriptionValue).append("\n");
-            serviceAnnotationBuilder.append("*/").append("\n");
+            serviceAnnotationBuilder.append("* ").append(descriptionValue).append(LS);
+            serviceAnnotationBuilder.append("*/").append(LS);
         }
 
         serviceAnnotationBuilder.append("@Service");

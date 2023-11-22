@@ -32,7 +32,7 @@ public class MavenPomCacheProvider {
 	private final MavenPomCache pomCache;
 
 	public MavenPomCacheProvider(Optional<MavenPomCache> mavenPomCacheProvider) {
-		this.pomCache = mavenPomCacheProvider.orElseGet(InMemoryMavenPomCache::new);
+		this.pomCache = mavenPomCacheProvider.orElseGet(this::rocksdb);
 	}
 
 	@NotNull

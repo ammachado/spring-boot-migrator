@@ -32,6 +32,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static org.springframework.sbm.SbmConstants.LS;
+
 /**
  * Renders progress information during the runtime of a recipe.
  * <p>
@@ -84,9 +86,9 @@ public class ApplyCommandRenderer {
         if (lines.length > 1) {
             collect = strings.subList(1, strings.size()).stream()
                     .map(l -> String.format("        %s", l))
-                    .collect(Collectors.joining("\n"));
+                    .collect(Collectors.joining(LS));
         }
-        return strings.get(0) + (collect.isEmpty() ? "" : "\n" + collect + "\n");
+        return strings.get(0) + (collect.isEmpty() ? "" : LS + collect + LS);
     }
 
     @EventListener

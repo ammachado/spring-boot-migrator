@@ -18,8 +18,10 @@ package org.springframework.sbm.boot;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.sbm.SbmConstants.LS;
+
 public class MarkdownRenderer {
-    private List<SectionBuilder.Section> sections = new ArrayList<>();
+    private final List<SectionBuilder.Section> sections = new ArrayList<>();
     private OverviewSectionBuilder.OverviewSection overviewSection;
 
     public void addSection(SectionBuilder.Section section) {
@@ -37,30 +39,30 @@ public class MarkdownRenderer {
 
     private String renderSection(SectionBuilder.Section s) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("== ").append(s.getTitle()).append("\n\n");
-        s.getParagraphs().forEach(p -> stringBuilder.append(p).append("<br>\n\n"));
+        stringBuilder.append("== ").append(s.getTitle()).append(LS).append(LS);
+        s.getParagraphs().forEach(p -> stringBuilder.append(p).append("<br>").append(LS).append(LS));
         stringBuilder.append(renderRelevanceSection(s.getRelevanceSection()));
         stringBuilder.append(renderTodoSection(s.getTodoSection()));
-        stringBuilder.append("\n");
+        stringBuilder.append(LS);
         return stringBuilder.toString();
     }
 
     private String renderTodoSection(SectionBuilder.TodoSection todoSection) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("=== ").append("Todo").append("\n\n");
+        stringBuilder.append("=== ").append("Todo").append(LS).append(LS);
         todoSection.getTodos().forEach(todo -> {
-            stringBuilder.append("- [ ] ").append(todo).append("\n");
+            stringBuilder.append("- [ ] ").append(todo).append(LS);
         });
         return stringBuilder.toString();
     }
 
     private String renderRelevanceSection(SectionBuilder.RelevanceSection relevanceSection) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("=== ").append("Relevance").append("\n\n");
+        stringBuilder.append("=== ").append("Relevance").append(LS).append(LS);
         relevanceSection.getParagraphs().forEach(p -> {
-            stringBuilder.append(p).append("\n");
+            stringBuilder.append(p).append(LS);
         });
-        stringBuilder.append("\n");
+        stringBuilder.append(LS);
         return stringBuilder.toString();
     }
 

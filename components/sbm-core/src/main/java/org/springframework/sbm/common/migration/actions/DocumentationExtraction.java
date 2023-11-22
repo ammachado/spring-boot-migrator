@@ -16,6 +16,7 @@
 package org.springframework.sbm.common.migration.actions;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.sbm.SbmConstants;
 import org.springframework.sbm.engine.context.ProjectContext;
 import org.springframework.sbm.engine.recipe.AbstractAction;
 import org.springframework.sbm.engine.recipe.Action;
@@ -59,14 +60,14 @@ public class DocumentationExtraction extends AbstractAction {
 
     private String render(String actionClass, List<? extends Member> members) {
         StringBuilder sb = new StringBuilder();
-        sb.append("| `").append(actionClass).append("`").append(System.lineSeparator());
+        sb.append("| `").append(actionClass).append("`").append(SbmConstants.LS);
         sb.append("| ");
         members.forEach(m ->
                 sb.append("`").append(m.getName()).append("`")
                         .append(" (").append("`").append(m.getTypeFqName()).append("`)")
-                        .append(System.lineSeparator())
+                        .append(SbmConstants.LS)
         );
-        sb.append("|").append(System.lineSeparator());
+        sb.append("|").append(SbmConstants.LS);
         return sb.toString();
     }
 

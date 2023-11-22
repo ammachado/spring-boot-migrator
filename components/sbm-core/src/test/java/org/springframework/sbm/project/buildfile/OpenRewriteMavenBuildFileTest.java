@@ -324,6 +324,7 @@ public class OpenRewriteMavenBuildFileTest {
     @Tag("integration")
     void testGetResolvedDependenciesPaths() {
 
+        @Language("xml")
         String pomXml =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                         "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
@@ -378,6 +379,7 @@ public class OpenRewriteMavenBuildFileTest {
     @Tag("integration")
     @Disabled("Disabled after upgrade to 7.25.0 because org/jboss/logging/jboss-logging/3.3.2.Final/jboss-logging-3.3.2.Final.jar is sometimes retreived and sometimes iot isn't")
     void testResolvedDependenciesWithPomTypeDependency() {
+        @Language("xml")
         String pomXml =
                 "<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
                         "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
@@ -577,6 +579,7 @@ public class OpenRewriteMavenBuildFileTest {
 
     @Test
     void testHasDependency() {
+        @Language("xml")
         String pomXml =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                         "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
@@ -616,6 +619,7 @@ public class OpenRewriteMavenBuildFileTest {
     @Test
     void testAddDependency() {
 
+        @Language("xml")
         String pomXml =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                         "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
@@ -655,6 +659,7 @@ public class OpenRewriteMavenBuildFileTest {
     @Test
     @Disabled
     void addDependency() {
+        @Language("xml")
         String pomXml =
                 "<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
                         "         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n" +
@@ -708,6 +713,7 @@ public class OpenRewriteMavenBuildFileTest {
     @Tag("integration")
     void testAddDependencies() {
 
+        @Language("xml")
         String pomXml =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                         "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
@@ -791,6 +797,7 @@ public class OpenRewriteMavenBuildFileTest {
     @Test
     void testDeleteDependencies() {
 
+        @Language("xml")
         String pomXml =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                         "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
@@ -1247,6 +1254,7 @@ public class OpenRewriteMavenBuildFileTest {
     @Test
     @Tag("integration")
     void testDeleteTypePomDependencies() {
+        @Language("xml")
         String pomXml =
                 "<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
                         "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
@@ -1311,6 +1319,7 @@ public class OpenRewriteMavenBuildFileTest {
     @Test
     void testDeleteTypePomDependenciesAll() {
 
+        @Language("xml")
         String pomXml =
                 "<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
                         "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
@@ -1358,6 +1367,7 @@ public class OpenRewriteMavenBuildFileTest {
     @Test
     @Disabled("FIXME: 786 Event listener")
     void testAddToDependencyManagement() {
+        @Language("xml")
         String givenPomXml =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                         "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
@@ -1439,6 +1449,7 @@ public class OpenRewriteMavenBuildFileTest {
 
     @Test
     void shouldAddMavenPluginWhenNoPluginSectionExists() {
+        @Language("xml")
         String pomXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
                 "    xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
@@ -1449,6 +1460,7 @@ public class OpenRewriteMavenBuildFileTest {
                 "    <version>1.0.0</version>\n" +
                 "</project>";
 
+        @Language("xml")
         String refactoredPomXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
                 "    xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
@@ -1478,6 +1490,7 @@ public class OpenRewriteMavenBuildFileTest {
 
     @Test
     void shouldAddMavenPluginWhenEmptyPluginSectionExists() {
+        @Language("xml")
         String pomXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
                 "    xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
@@ -1492,6 +1505,7 @@ public class OpenRewriteMavenBuildFileTest {
                 "    </build>\n" +
                 "</project>";
 
+        @Language("xml")
         String refactoredPomXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
                 "    xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
@@ -1521,6 +1535,7 @@ public class OpenRewriteMavenBuildFileTest {
 
     @Test
     void shouldNotAddMavenPluginWhenSamePluginExists() {
+        @Language("xml")
         String pomXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
                 "    xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
@@ -1539,6 +1554,7 @@ public class OpenRewriteMavenBuildFileTest {
                 "    </build>\n" +
                 "</project>";
 
+        @Language("xml")
         String refactoredPomXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
                 "    xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
@@ -1568,6 +1584,7 @@ public class OpenRewriteMavenBuildFileTest {
 
     @Test
     void shouldAddMavenPluginWhenAnotherPluginExists() {
+        @Language("xml")
         String pomXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
                 "    xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
@@ -1586,6 +1603,7 @@ public class OpenRewriteMavenBuildFileTest {
                 "    </build>\n" +
                 "</project>";
 
+        @Language("xml")
         String refactoredPomXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\"\n" +
                 "    xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
@@ -1620,6 +1638,7 @@ public class OpenRewriteMavenBuildFileTest {
     @Test
     public void shouldCreateDependencyManagementWithDependencyWhenNoneExists() {
 
+        @Language("xml")
         String before =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                         "<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n" +
@@ -1631,6 +1650,7 @@ public class OpenRewriteMavenBuildFileTest {
                         "\n" +
                         "</project>";
 
+        @Language("xml")
         String expected =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                         "<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n" +
@@ -2285,7 +2305,7 @@ public class OpenRewriteMavenBuildFileTest {
 
         assertThat(rootModule.getProperty("maven.compiler.source")).isNull();
         assertThat(rootModule.getProperty("maven.compiler.target")).isEqualTo("17");
-        assertThat(rootModule.print()).isEqualTo(  """
+        assertThat(rootModule.print()).isEqualToIgnoringNewLines(  """
                                                                                           <?xml version="1.0" encoding="UTF-8"?>
                                                                                           <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
                                                                                               <modelVersion>4.0.0</modelVersion>
@@ -2305,7 +2325,7 @@ public class OpenRewriteMavenBuildFileTest {
         BuildFile module1 = projectContext.getApplicationModules().getModule("module1").getBuildFile();
         assertThat(module1.getProperty("maven.compiler.source")).isEqualTo("17");
         assertThat(module1.getProperty("maven.compiler.target")).isEqualTo("17");
-        assertThat(module1.print()).isEqualTo("""
+        assertThat(module1.print()).isEqualToIgnoringNewLines("""
                                                                                           <?xml version="1.0" encoding="UTF-8"?>
                                                                                           <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
                                                                                               <modelVersion>4.0.0</modelVersion>
@@ -2351,7 +2371,7 @@ public class OpenRewriteMavenBuildFileTest {
 
         assertThat(rootModule.getProperty("maven.compiler.source")).isEqualTo("17");
         assertThat(rootModule.getProperty("maven.compiler.target")).isEqualTo("17");
-        assertThat(rootModule.print()).isEqualTo("""
+        assertThat(rootModule.print()).isEqualToIgnoringNewLines("""
                                                   <?xml version="1.0" encoding="UTF-8"?>
                                                   <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
                                                       <modelVersion>4.0.0</modelVersion>
@@ -2372,7 +2392,7 @@ public class OpenRewriteMavenBuildFileTest {
 
         assertThat(module1.getProperty("maven.compiler.source")).isNull();
         assertThat(module1.getProperty("maven.compiler.target")).isEqualTo("17");
-        assertThat(module1.print()).isEqualTo("""
+        assertThat(module1.print()).isEqualToIgnoringNewLines("""
                                               <?xml version="1.0" encoding="UTF-8"?>
                                               <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
                                                   <modelVersion>4.0.0</modelVersion>
@@ -2473,7 +2493,7 @@ public class OpenRewriteMavenBuildFileTest {
         openRewriteMavenBuildFile.removePluginsMatchingRegex("com\\.mulesoft\\..*");
 
 
-        assertThat(openRewriteMavenBuildFile.print()).isEqualTo(expected);
+        assertThat(openRewriteMavenBuildFile.print()).isEqualToIgnoringNewLines(expected);
     }
 
     @Test
@@ -2559,7 +2579,7 @@ public class OpenRewriteMavenBuildFileTest {
         openRewriteMavenBuildFile.removePlugins("com.mulesoft.munit.tools:munit-maven-plugin");
 
 
-        assertThat(openRewriteMavenBuildFile.print()).isEqualTo(expected);
+        assertThat(openRewriteMavenBuildFile.print()).isEqualToIgnoringNewLines(expected);
     }
 
     @Test

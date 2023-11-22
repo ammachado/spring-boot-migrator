@@ -20,6 +20,8 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.sbm.SbmConstants.LS;
+
 public class OverviewSectionBuilder {
     private OverviewSection overviewSection;
 
@@ -48,9 +50,9 @@ public class OverviewSectionBuilder {
 
         public String render() {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("\n").append("= ").append(title).append("\n\n");
-            paragraphs.forEach(p -> stringBuilder.append(p).append("\n"));
-            stringBuilder.append("\n");
+            stringBuilder.append(LS).append("= ").append(title).append(LS).append(LS);
+            paragraphs.forEach(p -> stringBuilder.append(p).append(LS));
+            stringBuilder.append(LS);
             return stringBuilder.toString();
         }
     }

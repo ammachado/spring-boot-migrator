@@ -23,16 +23,18 @@ import org.springframework.sbm.engine.precondition.PreconditionCheckResult;
 import org.springframework.sbm.engine.precondition.PreconditionVerificationResult;
 import org.springframework.stereotype.Component;
 
+import static org.springframework.sbm.SbmConstants.LS;
+
 @Component
 public class PreconditionVerificationRenderer {
 
     public String renderPreconditionCheckResults(PreconditionVerificationResult result) {
         AttributedStringBuilder stringBuilder = new AttributedStringBuilder();
         stringBuilder.style(stringBuilder.style().DEFAULT.bold());
-        stringBuilder.append("\n\n").append(String.format("Checked preconditions for '%s'", result.getProjectRoot())).append("\n");
+        stringBuilder.append(String.format("%n%nChecked preconditions for '%s'%n", result.getProjectRoot()));
 
         result.getResults().forEach(r -> stringBuilder.append(renderCheckResult(r)));
-        stringBuilder.append("\n");
+        stringBuilder.append(LS);
 
         return stringBuilder.toAnsi();
     }
@@ -60,7 +62,7 @@ public class PreconditionVerificationRenderer {
         }
 
         builder.append(" ").append(r.getMessage());
-        builder.append("\n");
+        builder.append(LS);
 
         return builder.toAnsi();
     }

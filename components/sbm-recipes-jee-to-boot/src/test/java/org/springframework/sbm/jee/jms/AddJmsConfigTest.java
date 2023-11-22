@@ -119,7 +119,7 @@ public class AddJmsConfigTest {
         sut.apply(projectContext);
 
         String actual = projectContext.getProjectJavaSources().list().get(1).getResource().print();
-        assertThat(actual.replace("\r\n", "\n").replace("\r", "\n"))
+        assertThat(actual)
                 .as(TestDiff.of(actual, expected))
                 .isEqualToNormalizingNewlines(expected);
     }
@@ -184,7 +184,7 @@ public class AddJmsConfigTest {
         sut.apply(projectContext);
 
         String actual = projectContext.getProjectJavaSources().list().get(1).getResource().print();
-        assertThat(actual.replace("\r\n", "\n").replace("\r", "\n"))
+        assertThat(actual)
                 .as(TestDiff.of(actual, expected))
                 .isEqualToNormalizingNewlines(expected);
     }
